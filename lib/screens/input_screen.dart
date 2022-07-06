@@ -228,7 +228,7 @@ class _InputScreenState extends State<InputScreen> {
               ),
             ),
             SizedBox(height: 20),
-            InkWell(
+            GestureDetector(
               onTap: () => homeController.teYepe(),
               child: Container(
                 height: 60,
