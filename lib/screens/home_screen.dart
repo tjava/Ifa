@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 15),
             Center(
               child: Container(
-                margin: const EdgeInsets.only(top: 30.0, left: 10),
+                margin: const EdgeInsets.only(top: 20.0, left: 10),
                 child: CustomText(
                   text:
                       '${homeController.firstNumber.value}, ${homeController.secondNumber.value}, ${homeController.thirdNumber.value}, ${homeController.forthNumber.value}',
@@ -48,29 +48,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              "assets/images/${homeController.showHouse16.value}.png"),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 25),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -246,62 +224,157 @@ class HomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              "assets/images/${homeController.showHouse14.value}.png"),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                Container(
+                  height: 80,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/${homeController.showHouse14.value}.png"),
+                      fit: BoxFit.fill,
                     ),
-                  ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              "assets/images/${homeController.showHouse13.value}.png"),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                Container(
+                  height: 80,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/${homeController.showHouse13.value}.png"),
+                      fit: BoxFit.fill,
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              "assets/images/${homeController.showHouse15.value}.png"),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                Container(
+                  height: 80,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/${homeController.showHouse15.value}.png"),
+                      fit: BoxFit.fill,
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.only(right: 50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 80,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            "assets/images/${homeController.showHouse16.value}.png"),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    children: [
+                      if (homeController.confirm.value)
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: green,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        )
+                      else
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: red,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10.0),
+                        child: CustomText(
+                          text: 'Confirmation',
+                          size: 15.0,
+                          weight: FontWeight.bold,
+                          color: dark,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        height: 80,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                "assets/images/${homeController.showSpeedHouse.value}.png"),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10.0),
+                        child: CustomText(
+                          text: 'Speed, ${homeController.showSpeedHouse.value}',
+                          size: 15.0,
+                          weight: FontWeight.bold,
+                          color: dark,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 80,
+                        width: 30,
+                        child: Center(
+                          child: CustomText(
+                            text: homeController.showOnesHouse.value.toString(),
+                            size: 25.0,
+                            weight: FontWeight.bold,
+                            color: dark,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10.0),
+                        child: CustomText(
+                          text: "One's",
+                          size: 15.0,
+                          weight: FontWeight.bold,
+                          color: dark,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

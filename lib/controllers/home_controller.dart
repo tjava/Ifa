@@ -26,6 +26,10 @@ class HomeController extends GetxController {
   List<int>? house15 = [0, 0, 0, 0];
   List<int>? house16 = [0, 0, 0, 0];
 
+  List<int>? confirmationHouse = [0, 0, 0, 0];
+  List<int>? speedHouse = [0, 0, 0, 0];
+  List<int>? onesHouse = [0, 0, 0, 0];
+
   Rx<int?> showHouse5 = 5.obs;
   Rx<int?> showHouse6 = 6.obs;
   Rx<int?> showHouse7 = 7.obs;
@@ -39,13 +43,22 @@ class HomeController extends GetxController {
   Rx<int?> showHouse15 = 15.obs;
   Rx<int?> showHouse16 = 16.obs;
 
+  Rx<int?> showConfirmationHouse = 0.obs;
+  Rx<int?> showSpeedHouse = 0.obs;
+  Rx<int?> showOnesHouse = 0.obs;
+
+  Rx<bool> confirm = false.obs;
+
+  RxList<int> onGrand =
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].obs;
+
   Future changeFirstNumber({int? number}) async => firstNumber.value = number!;
   Future changeSecondNumber({int? number}) async =>
       secondNumber.value = number!;
   Future changeThirdNumber({int? number}) async => thirdNumber.value = number!;
   Future changeForthNumber({int? number}) async => forthNumber.value = number!;
 
-  void teYepe() {
+  void showSoil() {
     house1 = homeService!.computeHouse(house: firstNumber.value);
     house2 = homeService!.computeHouse(house: secondNumber.value);
     house3 = homeService!.computeHouse(house: thirdNumber.value);
@@ -152,6 +165,97 @@ class HomeController extends GetxController {
     showHouse15.value = homeService!.resultHouse(house: house15);
     showHouse16.value = homeService!.resultHouse(house: house16);
 
+    onGrand.value = [
+      firstNumber.value!,
+      secondNumber.value!,
+      thirdNumber.value!,
+      forthNumber.value!,
+      showHouse5.value!,
+      showHouse6.value!,
+      showHouse7.value!,
+      showHouse8.value!,
+      showHouse9.value!,
+      showHouse10.value!,
+      showHouse11.value!,
+      showHouse12.value!,
+      showHouse13.value!,
+      showHouse14.value!,
+      showHouse15.value!,
+      showHouse16.value!,
+    ];
+
+    confirmation();
+    speed();
+    ones(onGrand);
+
+    if (onGrand.contains(showConfirmationHouse.value)) {
+      confirm.value = true;
+    } else {
+      confirm.value = false;
+    }
+
     Get.toNamed("/home");
+  }
+
+  void confirmation() {
+    List<int>? house3_6 = [0, 0, 0, 0];
+
+    house3_6[0] =
+        homeService!.sumHouse(house1: house3![0], house2: house6![0])!;
+    house3_6[1] =
+        homeService!.sumHouse(house1: house3![1], house2: house6![1])!;
+    house3_6[2] =
+        homeService!.sumHouse(house1: house3![2], house2: house6![2])!;
+    house3_6[3] =
+        homeService!.sumHouse(house1: house3![3], house2: house6![3])!;
+
+    confirmationHouse![0] =
+        homeService!.sumHouse(house1: house3_6[0], house2: house15![0])!;
+    confirmationHouse![1] =
+        homeService!.sumHouse(house1: house3_6[1], house2: house15![1])!;
+    confirmationHouse![2] =
+        homeService!.sumHouse(house1: house3_6[2], house2: house15![2])!;
+    confirmationHouse![3] =
+        homeService!.sumHouse(house1: house3_6[3], house2: house15![3])!;
+
+    showConfirmationHouse.value =
+        homeService!.resultHouse(house: confirmationHouse);
+  }
+
+  void speed() {
+    List<int>? house3_16 = [0, 0, 0, 0];
+
+    house3_16[0] =
+        homeService!.sumHouse(house1: house3![0], house2: house16![0])!;
+    house3_16[1] =
+        homeService!.sumHouse(house1: house3![1], house2: house16![1])!;
+    house3_16[2] =
+        homeService!.sumHouse(house1: house3![2], house2: house16![2])!;
+    house3_16[3] =
+        homeService!.sumHouse(house1: house3![3], house2: house16![3])!;
+
+    speedHouse![0] =
+        homeService!.sumHouse(house1: house3_16[0], house2: house8![0])!;
+    speedHouse![1] =
+        homeService!.sumHouse(house1: house3_16[1], house2: house8![1])!;
+    speedHouse![2] =
+        homeService!.sumHouse(house1: house3_16[2], house2: house8![2])!;
+    speedHouse![3] =
+        homeService!.sumHouse(house1: house3_16[3], house2: house8![3])!;
+
+    showSpeedHouse.value = homeService!.resultHouse(house: speedHouse);
+  }
+
+  void ones(List<int> houses) {
+    int ones = 0;
+    List<int>? compute;
+
+    for (int house in houses) {
+      compute = homeService!.computeHouse(house: house);
+      if (compute![0] == 1) ones += 1;
+      if (compute[3] == 1) ones += 1;
+    }
+
+    showOnesHouse.value = ones;
   }
 }

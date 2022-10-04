@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialBinding: InitDependencies(),
-      title: 'Ifá',
+      title: 'Al-Hisab',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
