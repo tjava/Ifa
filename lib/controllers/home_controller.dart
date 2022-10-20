@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:ibile/services/home_service.dart';
 
@@ -7,6 +9,9 @@ class HomeController extends GetxController {
   Rx<int?> secondNumber = 2.obs;
   Rx<int?> thirdNumber = 3.obs;
   Rx<int?> forthNumber = 4.obs;
+
+  Rx<int?> firstTestNumber = 1.obs;
+  Rx<int?> secondTestNumber = 2.obs;
 
   List<int>? house1;
   List<int>? house2;
@@ -28,7 +33,9 @@ class HomeController extends GetxController {
 
   List<int>? confirmationHouse = [0, 0, 0, 0];
   List<int>? speedHouse = [0, 0, 0, 0];
-  List<int>? onesHouse = [0, 0, 0, 0];
+  // List<int>? onesHouse = [0, 0, 0, 0];
+  // List<int>? firstTestHouse = [0, 0, 0, 0];
+  // List<int>? secondTestHouse = [0, 0, 0, 0];
 
   Rx<int?> showHouse5 = 5.obs;
   Rx<int?> showHouse6 = 6.obs;
@@ -46,8 +53,13 @@ class HomeController extends GetxController {
   Rx<int?> showConfirmationHouse = 0.obs;
   Rx<int?> showSpeedHouse = 0.obs;
   Rx<int?> showOnesHouse = 0.obs;
+  Rx<int?> showFirstTestHouse = 0.obs;
+  Rx<int?> showSecondTestHouse = 0.obs;
 
   Rx<bool> confirm = false.obs;
+  Rx<bool> firstTest = false.obs;
+  Rx<bool> secondTest = false.obs;
+  Rx<bool> second = false.obs;
 
   RxList<int> onGrand =
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].obs;
@@ -57,6 +69,11 @@ class HomeController extends GetxController {
       secondNumber.value = number!;
   Future changeThirdNumber({int? number}) async => thirdNumber.value = number!;
   Future changeForthNumber({int? number}) async => forthNumber.value = number!;
+
+  Future changeFirstTestNumber({int? number}) async =>
+      firstTestNumber.value = number!;
+  Future changeSecondTestNumber({int? number}) async =>
+      secondTestNumber.value = number!;
 
   void showSoil() {
     house1 = homeService!.computeHouse(house: firstNumber.value);
@@ -187,12 +204,9 @@ class HomeController extends GetxController {
     confirmation();
     speed();
     ones(onGrand);
+    runFirstTest();
 
-    if (onGrand.contains(showConfirmationHouse.value)) {
-      confirm.value = true;
-    } else {
-      confirm.value = false;
-    }
+    second.value = false;
 
     Get.toNamed("/home");
   }
@@ -220,6 +234,12 @@ class HomeController extends GetxController {
 
     showConfirmationHouse.value =
         homeService!.resultHouse(house: confirmationHouse);
+
+    if (onGrand.contains(showConfirmationHouse.value)) {
+      confirm.value = true;
+    } else {
+      confirm.value = false;
+    }
   }
 
   void speed() {
@@ -257,5 +277,80 @@ class HomeController extends GetxController {
     }
 
     showOnesHouse.value = ones;
+  }
+
+  void runFirstTest() {
+    List<int>? house3_7 = [0, 0, 0, 0];
+
+    house3_7[0] =
+        homeService!.sumHouse(house1: house3![0], house2: house7![0])!;
+    house3_7[1] =
+        homeService!.sumHouse(house1: house3![1], house2: house7![1])!;
+    house3_7[2] =
+        homeService!.sumHouse(house1: house3![2], house2: house7![2])!;
+    house3_7[3] =
+        homeService!.sumHouse(house1: house3![3], house2: house7![3])!;
+
+    showFirstTestHouse.value = homeService!.resultHouse(house: house3_7);
+
+    if (onGrand.contains(showFirstTestHouse.value)) {
+      firstTest.value = true;
+    } else {
+      firstTest.value = false;
+    }
+  }
+
+  void runSecondTest() {
+    List<int>? oFirstHouse;
+    List<int>? tFirstHouse;
+    List<int>? firstHouseO_T = [0, 0, 0, 0];
+
+    List<int>? oSecondHouse;
+    List<int>? firstSecondHouse = [0, 0, 0, 0];
+
+    if (onGrand.contains(firstTestNumber.value)) {
+      secondTest.value = true;
+    } else {
+      oFirstHouse = homeService!.computeHouse(house: firstTestNumber.value);
+      tFirstHouse =
+          homeService!.computeHouse(house: onGrand[firstTestNumber.value! - 1]);
+
+      firstHouseO_T[0] = homeService!
+          .sumHouse(house1: oFirstHouse![0], house2: tFirstHouse![0])!;
+      firstHouseO_T[1] = homeService!
+          .sumHouse(house1: oFirstHouse[1], house2: tFirstHouse[1])!;
+      firstHouseO_T[2] = homeService!
+          .sumHouse(house1: oFirstHouse[2], house2: tFirstHouse[2])!;
+      firstHouseO_T[3] = homeService!
+          .sumHouse(house1: oFirstHouse[3], house2: tFirstHouse[3])!;
+
+      showSecondTestHouse.value =
+          homeService!.resultHouse(house: firstHouseO_T);
+
+      if (onGrand.contains(showSecondTestHouse.value)) {
+        secondTest.value = true;
+      } else {
+        oSecondHouse = homeService!.computeHouse(house: secondTestNumber.value);
+
+        firstSecondHouse[0] = homeService!
+            .sumHouse(house1: oSecondHouse![0], house2: oFirstHouse[0])!;
+        firstSecondHouse[1] = homeService!
+            .sumHouse(house1: oSecondHouse[1], house2: oFirstHouse[1])!;
+        firstSecondHouse[2] = homeService!
+            .sumHouse(house1: oSecondHouse[2], house2: oFirstHouse[2])!;
+        firstSecondHouse[3] = homeService!
+            .sumHouse(house1: oSecondHouse[3], house2: oFirstHouse[3])!;
+
+        showSecondTestHouse.value =
+            homeService!.resultHouse(house: firstSecondHouse);
+
+        if (onGrand.contains(showSecondTestHouse.value)) {
+          secondTest.value = true;
+        } else {
+          secondTest.value = false;
+        }
+      }
+    }
+    second.value = true;
   }
 }
